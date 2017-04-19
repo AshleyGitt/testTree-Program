@@ -1,0 +1,108 @@
+#ifndef SEQUENCEMAP_H_INCLUDED
+#define SEQUENCEMAP_H_INCLUDED
+
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+
+   class SequenceMap
+{
+	private:
+		string recogSeq; //Recognition Sequence
+		vector<string> Enzyme;    //Enzyme Acronym
+	public:
+		SequenceMap();
+		SequenceMap	(string newSeq, string newEnzy);
+		void setrecogSeq(string newSeq);
+		string getrecogSeq();
+
+		void insertEn(string newEnzy);
+
+		void merge(SequenceMap map);
+		void printrecogSeq();
+		void printEnzymes();
+
+		bool operator<(SequenceMap right);
+		bool operator>(SequenceMap right);
+};
+
+
+
+SequenceMap::SequenceMap(){}
+
+SequenceMap::SequenceMap(string newSeq, string newEnzy)
+{
+	setrecogSeq(newSeq);
+	Enzyme.push_back(newEnzy);
+}
+
+
+void SequenceMap::setrecogSeq(string newSeq)
+{
+	recogSeq=newSeq;
+}
+
+
+string SequenceMap::getrecogSeq()
+{
+	return recogSeq;
+}
+
+
+void SequenceMap::insertEn(string newEnzyid)
+{
+	Enzyme.push_back(newEnzyid);
+}
+
+void SequenceMap::merge(SequenceMap map)        //in case of duplication on insertion
+{
+	Enzyme.push_back(map.Enzyme[0]); //Add SequenceMap's enzyme acronym to the set of enzyme acronyms
+                                        //to the set of Enzyme Acronyms contained by the SequenceMap
+                                        //in the tree.
+}
+
+void SequenceMap::printrecogSeq()               //Print recognition sequence
+{
+	cout<< recogSeq<< "--";
+}
+
+void SequenceMap::printEnzymes()                //Print enzymes
+{
+	for(unsigned int i=0; i<Enzyme.size(); i++)
+	{
+		cout<< "--"<< Enzyme[i]<< endl;
+
+	}
+}
+
+bool SequenceMap::operator<(SequenceMap right)
+{
+	if(recogSeq.compare(right.getrecogSeq())<0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+bool SequenceMap::operator>(SequenceMap right)
+{
+	if(recogSeq.compare(right.getrecogSeq())>0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+
+
+#endif // SEQUENCEMAP_H_INCLUDED
